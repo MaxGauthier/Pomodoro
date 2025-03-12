@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const shortBreakBtn = document.getElementById('short-break');
     const longBreakBtn = document.getElementById('long-break');
     const slider = document.getElementById('startTimeRange');
-    const sliderValueDisplay = document.getElementById('sliderValue');
     const sessionsDisplay = document.getElementById('sessions');
 
     let countdown;
@@ -75,19 +74,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateSliderLabel(mode) {
-        let label = '';
         let val = 0;
         if (mode === 'pomodoro') {
-            label = 'Set Pomodoro Time';
             val = pomodoroTime;
         } else if (mode === 'short-break') {
-            label = 'Set Short Break Time';
             val = shortBreakTime;
         } else if (mode === 'long-break') {
-            label = 'Set Long Break Time';
             val = longBreakTime;
         }
-        //sliderValueDisplay.textContent = `${label}: ${val} min`;
         slider.value = val;
     }
 
@@ -123,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDisplay();
     }
 
-    // When user moves slider, update current mode's time
     slider.addEventListener('input', () => {
         const newValue = parseInt(slider.value);
         if (currentMode === 'pomodoro') {
@@ -134,14 +127,12 @@ document.addEventListener('DOMContentLoaded', () => {
             longBreakTime = newValue;
         }
 
-        // Only update timeLeft if timer isn't running
         if (!isRunning) {
             timeLeft = newValue * 60;
             updateDisplay();
         }
     });
 
-    // Button Listeners
     startBtn.addEventListener('click', startTimer);
     pauseBtn.addEventListener('click', pauseTimer);
     resetBtn.addEventListener('click', resetTimer);
@@ -150,6 +141,5 @@ document.addEventListener('DOMContentLoaded', () => {
     shortBreakBtn.addEventListener('click', () => setMode('short-break'));
     longBreakBtn.addEventListener('click', () => setMode('long-break'));
 
-    // Init
     setMode('pomodoro');
 });
